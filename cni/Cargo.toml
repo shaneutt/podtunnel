@@ -1,0 +1,26 @@
+[package]
+name = "cni"
+readme = "../README.md"
+keywords = ["kubernetes", "networking", "security", "cni"]
+publish = false
+
+# workspace settings
+authors = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+version = { workspace = true }
+
+[[bin]]
+name = "podtunnel-cni"
+path = "main.rs"
+
+[dependencies]
+
+# local dependencies
+drivers = { path = "../drivers" }
+
+# workspace dependencies
+anyhow = { workspace = true }
+serde_json = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+tokio = { workspace = true, features = ["full"] }

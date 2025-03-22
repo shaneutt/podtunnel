@@ -1,0 +1,30 @@
+[package]
+name = "xtask"
+readme = "../README.md"
+publish = false
+
+# workspace settings
+authors = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+version = { workspace = true }
+
+[[bin]]
+name = "xtask"
+path = "main.rs"
+
+[dependencies]
+
+# local dependencies
+api = { path = "../api" }
+
+# workspace dependencies
+anyhow = { workspace = true }
+kube = { workspace = true, features = ["runtime", "derive"] }
+k8s-openapi = { workspace = true, features = ["latest"] }
+tokio = { workspace = true, features = ["full"] }
+
+# specific dependencies
+clap = { version = "4.5.32", features = ["derive"] }
+serde_yaml = "0.9.34"
+

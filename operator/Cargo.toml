@@ -1,0 +1,33 @@
+[package]
+name = "operator"
+readme = "../README.md"
+keywords = ["kubernetes", "networking", "security", "operator"]
+publish = false
+
+# workspace settings
+authors = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+version = { workspace = true }
+
+[[bin]]
+name = "podtunnel-operator"
+path = "main.rs"
+
+[dependencies]
+
+# local dependencies
+api = { path = "../api" }
+drivers = { path = "../drivers" }
+
+# workspace dependencies
+anyhow = { workspace = true }
+kube = { workspace = true, features = ["runtime", "derive"] }
+k8s-openapi = { workspace = true, features = ["latest"] }
+tokio = { workspace = true, features = ["full"] }
+
+# specific dependencies
+futures = "0.3.31"
+thiserror = "2.0.12"
+tracing = "0.1.41"
+tracing-subscriber = "0.3.19"
