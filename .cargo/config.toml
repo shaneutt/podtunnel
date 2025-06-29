@@ -1,0 +1,5 @@
+[alias]
+xtask = "run --quiet --package xtask --"
+
+[build]
+rustflags = ["-C", "debuginfo=2"]

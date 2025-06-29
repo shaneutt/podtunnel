@@ -1,0 +1,33 @@
+---
+apiVersion: podtunnel.com/v1alpha1
+kind: WireguardAddressPool
+metadata:
+  name: pool1
+spec:
+  network: "10.0.100.0/24"
+---
+apiVersion: podtunnel.com/v1alpha1
+kind: WireguardConfig
+metadata:
+  name: nginx1
+spec:
+  interface:
+    address:
+      PoolAddress:
+        name: pool1
+  peers:
+  - Pod:
+      name: nginx2
+---
+apiVersion: podtunnel.com/v1alpha1
+kind: WireguardConfig
+metadata:
+  name: nginx2
+spec:
+  interface:
+    address:
+      PoolAddress:
+        name: pool1
+  peers:
+  - Pod:
+      name: nginx1

@@ -1,0 +1,22 @@
+[package]
+name = "api"
+readme = "../README.md"
+keywords = ["kubernetes", "networking", "security", "wireguard", "vpn", "api"]
+publish = false
+
+# workspace settings
+authors = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+version = { workspace = true }
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+anyhow = { workspace = true }
+kube = { workspace = true, features = ["runtime", "derive"] }
+k8s-openapi = { workspace = true, features = ["latest"] }
+schemars = { workspace = true }
+serde_json = { workspace = true }
+serde = { workspace = true, features = ["derive"] }

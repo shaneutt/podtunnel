@@ -1,0 +1,27 @@
+[package]
+name = "drivers"
+readme = "../README.md"
+keywords = ["kubernetes", "networking", "security", "wireguard"]
+publish = false
+
+# workspace settings
+authors = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+version = { workspace = true }
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+
+# local dependencies
+api = { path = "../api" }
+
+# workspace dependencies
+anyhow = { workspace = true }
+kube = { workspace = true, features = ["runtime", "derive"] }
+k8s-openapi = { workspace = true, features = ["latest"] }
+
+# specific dependencies
+nix = { version = "0.29.0", features = ["sched"] }

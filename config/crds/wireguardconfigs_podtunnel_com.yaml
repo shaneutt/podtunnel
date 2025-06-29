@@ -1,0 +1,217 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: wireguardconfigs.podtunnel.com
+spec:
+  group: podtunnel.com
+  names:
+    categories: []
+    kind: WireguardConfig
+    plural: wireguardconfigs
+    shortNames: []
+    singular: wireguardconfig
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns: []
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Auto-generated derived type for WireguardConfigSpec via `CustomResource`
+        properties:
+          spec:
+            properties:
+              interface:
+                default: {}
+                properties:
+                  address:
+                    nullable: true
+                    oneOf:
+                    - required:
+                      - NetworkAddress
+                    - required:
+                      - PoolAddress
+                    properties:
+                      NetworkAddress:
+                        properties:
+                          address:
+                            format: ipv4
+                            type: string
+                          prefix:
+                            format: uint8
+                            minimum: 0.0
+                            type: integer
+                        required:
+                        - address
+                        - prefix
+                        type: object
+                      PoolAddress:
+                        properties:
+                          name:
+                            type: string
+                          namespace:
+                            default: default
+                            nullable: true
+                            type: string
+                        required:
+                        - name
+                        type: object
+                    type: object
+                  dns:
+                    items:
+                      type: string
+                    nullable: true
+                    type: array
+                  listen_port:
+                    default: 51820
+                    format: uint16
+                    minimum: 0.0
+                    nullable: true
+                    type: integer
+                  private_key:
+                    nullable: true
+                    properties:
+                      name:
+                        type: string
+                      namespace:
+                        default: default
+                        nullable: true
+                        type: string
+                    required:
+                    - name
+                    type: object
+                type: object
+              peers:
+                items:
+                  oneOf:
+                  - required:
+                    - Config
+                  - required:
+                    - Pod
+                  properties:
+                    Config:
+                      properties:
+                        allowed_ips:
+                          items:
+                            type: string
+                          type: array
+                        endpoint_address:
+                          format: ipv4
+                          type: string
+                        endpoint_port:
+                          default: 51820
+                          format: uint16
+                          minimum: 0.0
+                          nullable: true
+                          type: integer
+                        persistent_keepalive:
+                          format: int32
+                          nullable: true
+                          type: integer
+                        public_key:
+                          type: string
+                        tunnel_address:
+                          format: ipv4
+                          nullable: true
+                          type: string
+                        tunnel_address_prefix:
+                          format: uint8
+                          minimum: 0.0
+                          nullable: true
+                          type: integer
+                      required:
+                      - endpoint_address
+                      - public_key
+                      type: object
+                    Pod:
+                      properties:
+                        name:
+                          type: string
+                        namespace:
+                          default: default
+                          nullable: true
+                          type: string
+                      required:
+                      - name
+                      type: object
+                  type: object
+                type: array
+            type: object
+          status:
+            nullable: true
+            properties:
+              interface_ready:
+                default: false
+                type: boolean
+              peers:
+                items:
+                  properties:
+                    allowed_ips:
+                      items:
+                        type: string
+                      type: array
+                    endpoint_address:
+                      format: ipv4
+                      type: string
+                    endpoint_port:
+                      default: 51820
+                      format: uint16
+                      minimum: 0.0
+                      nullable: true
+                      type: integer
+                    persistent_keepalive:
+                      format: int32
+                      nullable: true
+                      type: integer
+                    public_key:
+                      type: string
+                    tunnel_address:
+                      format: ipv4
+                      nullable: true
+                      type: string
+                    tunnel_address_prefix:
+                      format: uint8
+                      minimum: 0.0
+                      nullable: true
+                      type: integer
+                  required:
+                  - endpoint_address
+                  - public_key
+                  type: object
+                type: array
+              pod_address:
+                format: ipv4
+                nullable: true
+                type: string
+              private_key:
+                nullable: true
+                properties:
+                  name:
+                    type: string
+                  namespace:
+                    default: default
+                    nullable: true
+                    type: string
+                required:
+                - name
+                type: object
+              public_key:
+                nullable: true
+                type: string
+              tunnel_address:
+                format: ipv4
+                nullable: true
+                type: string
+              tunnel_address_prefix:
+                format: uint8
+                minimum: 0.0
+                nullable: true
+                type: integer
+            type: object
+        required:
+        - spec
+        title: WireguardConfig
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
